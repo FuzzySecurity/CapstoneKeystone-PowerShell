@@ -31,7 +31,7 @@ Library Integration
 
   * A modified version of Get-KeystoneAssembly has been integrated into the
     official Keystone Engine project.
-    
+
     -> https://github.com/keystone-engine/keystone/tree/master/bindings
 
 
@@ -39,11 +39,6 @@ Examples
 --------
 
 #### Get-KeystoneAssembly
-
-Powershell wrapper for Keystone (using inline C#).
-
-In effect the function directly parses the Keystone dll so it can support any
-features implemented by Keystone so long as function calls are prototyped in C#.
 
 ```
 # Support for multi-line code blocks
