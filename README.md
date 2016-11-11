@@ -34,6 +34,11 @@ Library Integration
 
     -> https://github.com/keystone-engine/keystone/tree/master/bindings
 
+  * A modified version of Get-CapstoneDisassembly has been integrated into the
+    official Capstone Engine project.
+
+    -> https://github.com/aquynh/capstone/tree/master/bindings
+
 
 Examples
 --------
