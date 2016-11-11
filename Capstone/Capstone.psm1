@@ -189,7 +189,7 @@ function Get-CapstoneDisassembly {
 		CS_ERR_MEM,       /// Out-Of-Memory error: cs_open(), cs_disasm(), cs_disasm_iter()
 		CS_ERR_ARCH,      /// Unsupported architecture: cs_open()
 		CS_ERR_HANDLE,    /// Invalid handle: cs_op_count(), cs_op_index()
-		CS_ERR_CSH,	      /// Invalid csh argument: cs_close(), cs_errno(), cs_option()
+		CS_ERR_CSH,       /// Invalid csh argument: cs_close(), cs_errno(), cs_option()
 		CS_ERR_MODE,      /// Invalid/unsupported mode: cs_open()
 		CS_ERR_OPTION,    /// Invalid/unsupported option: cs_option()
 		CS_ERR_DETAIL,    /// Information is unavailable because detail option is OFF
@@ -390,14 +390,12 @@ function Get-CapstoneDisassembly {
 			$Cast = [system.runtime.interopservices.marshal]::PtrToStructure($InsnPointer,[type]$cs_insn)
 	
 			if ($CS_OPT -eq 0) {
-				# Some dirty tricks for spacing, sorry mmkay!
-				if ($i -eq 0) {
-					$Disasm += echo "`n"
+				$HashTable = @{
+					Address = echo "0x$("{0:X}" -f $Cast.address)"
+					Instruction = echo "$($Cast.mnemonic) $($Cast.operands)"
 				}
-				$Disasm += echo "$($Cast.mnemonic) $($Cast.operands)"
-				if ($i -eq $($count-1)){
-					$Disasm += echo "`n"
-				}
+				$Object = New-Object PSObject -Property $HashTable
+				$Disasm += $Object |Select-Object Address,Instruction
 			} else {
 				$DetailCast = [system.runtime.interopservices.marshal]::PtrToStructure($Cast.detail,[type]$cs_detail)
 				if($DetailCast.regs_read_count -gt 0) {
