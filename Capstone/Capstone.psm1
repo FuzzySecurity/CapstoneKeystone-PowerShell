@@ -259,7 +259,7 @@ function Get-CapstoneDisassembly {
 
 		[DllImport("$DllPath")]
 		public static extern cs_err cs_close(
-			IntPtr handle);
+			ref IntPtr handle);
 
 		[DllImport("$DllPath")]
 		public static extern cs_err cs_option(
@@ -339,7 +339,7 @@ function Get-CapstoneDisassembly {
 	if ($CallResult -ne "CS_ERR_OK") {
 		echo "`n[!] cs_option error: $CallResult"
 		echo "[>] Quitting..`n"
-		$CallResult = [Capstone]::cs_close($DisAsmHandle)
+		$CallResult = [Capstone]::cs_close([ref]$DisAsmHandle)
 		Return
 	}
 
@@ -358,7 +358,7 @@ function Get-CapstoneDisassembly {
 	if ($CallResult -ne "CS_ERR_OK") {
 		echo "`n[!] cs_option error: $CallResult"
 		echo "[>] Quitting..`n"
-		$CallResult = [Capstone]::cs_close($DisAsmHandle)
+		$CallResult = [Capstone]::cs_close([ref]$DisAsmHandle)
 		Return
 	}
 
@@ -427,9 +427,9 @@ function Get-CapstoneDisassembly {
 			$BuffOffset = $BuffOffset + $cs_insn_size
 		}
 	} else {
-		echo "[!] Disassembly Failed"
-		echo "[>] Quitting.."
-		$CallResult = [Capstone]::cs_close($DisAsmHandle)
+		echo "`n[!] Disassembly Failed"
+		echo "[>] Quitting..`n"
+		$CallResult = [Capstone]::cs_close([ref]$DisAsmHandle)
 		Return
 	}
 	
